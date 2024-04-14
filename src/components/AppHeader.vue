@@ -3,6 +3,7 @@
         <div class="logo-and-search">
             <Logo />
             <input placeholder="Поиск по имени" />
+            <input placeholder="Поиск по компании" />
             <button>Добавить</button>
         </div>
         <div class="visitors">
@@ -20,7 +21,7 @@ import Logo from '../assets/Logo.vue';
   left: 0;
   width: 100%;
   height: 130px;
-  padding: 20px;
+  padding: 0 50px;
   margin: 0;
   z-index: 1000; 
   box-sizing: border-box;
