@@ -1,38 +1,40 @@
 <template>
-    <table class="table-container">
-        <thead>
-            <tr>
-                <th>Номер</th>
-                <th>ФИО</th>
-                <th>Компания</th>
-                <th>Группа</th>
-                <th></th>
-                <th>Присутствие</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>Зубенко Михаил Петрович</td>
-                <td>ООО "АСОЛЬ"</td>
-                <td>Партнёр</td>
-                <td></td>
-                <td>
-                    <PresenceIndicator :is-present="true" />
-                </td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Зубенко Михаил Петрович</td>
-                <td>ООО "АСОЛЬ"</td>
-                <td>Прохожий</td>
-                <td></td>
-                <td>
-                    <PresenceIndicator :is-present="false" />
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div>
+        <table class="table-container">
+            <thead>
+                <tr>
+                    <th>Номер</th>
+                    <th>ФИО</th>
+                    <th>Компания</th>
+                    <th>Группа</th>
+                    <th></th>
+                    <th>Присутствие</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Зубенко Михаил Петрович</td>
+                    <td>ООО "АСОЛЬ"</td>
+                    <td>Партнёр</td>
+                    <td></td>
+                    <td>
+                        <PresenceIndicator :is-present="true" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Зубенко Михаил Петрович</td>
+                    <td>ООО "АСОЛЬ"</td>
+                    <td>Прохожий</td>
+                    <td></td>
+                    <td>
+                        <PresenceIndicator :is-present="false" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </template>
 <script setup lang="ts">
 import PresenceIndicator from '../components/PresenceIndicator.vue'
