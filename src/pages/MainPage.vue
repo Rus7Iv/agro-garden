@@ -6,6 +6,7 @@
                 <th>ФИО</th>
                 <th>Компания</th>
                 <th>Группа</th>
+                <th></th>
                 <th>Присутствие</th>
             </tr>
         </thead>
@@ -15,12 +16,26 @@
                 <td>Зубенко Михаил Петрович</td>
                 <td>ООО "АСОЛЬ"</td>
                 <td>Партнёр</td>
-                <td>Присутствует</td>
+                <td></td>
+                <td>
+                    <PresenceIndicator :is-present="true" />
+                </td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Зубенко Михаил Петрович</td>
+                <td>ООО "АСОЛЬ"</td>
+                <td>Прохожий</td>
+                <td></td>
+                <td>
+                    <PresenceIndicator :is-present="false" />
+                </td>
             </tr>
         </tbody>
     </table>
 </template>
 <script setup lang="ts">
+import PresenceIndicator from '../components/PresenceIndicator.vue'
 </script>
 <style scoped>
 .table-container {
@@ -40,6 +55,7 @@ th {
 
 td {
     font-size: 30px;
+    padding: 15px 0;
 }
 
 td, th {
@@ -49,5 +65,7 @@ td, th {
 
 td:last-child, th:last-child {
     text-align: center;
+    justify-content: center;
+    display: flex;
 }
 </style>
