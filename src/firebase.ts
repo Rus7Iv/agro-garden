@@ -34,9 +34,16 @@ export const deleteVisitor = (id: string | undefined) => {
 }
 
 export const useLoadVisitors = () => {
-  const visitors = ref<{ id: string; }[]>([])
+  const visitors = ref<{ id: string; fullname: string; company: string; group: string; presence: boolean; }[]>([])
+
   const close = visitorsCollection.onSnapshot(snapshot => {
-    visitors.value = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+    visitors.value = snapshot.docs.map(doc => ({ 
+      id: doc.id, 
+      fullname: doc.data().fullname, 
+      company: doc.data().company, 
+      group: doc.data().group, 
+      presence: doc.data().presence 
+    }))
   })
   onUnmounted(close)
   return visitors

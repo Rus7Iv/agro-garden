@@ -3,33 +3,23 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Номер</th>
-                    <th>ФИО</th>
-                    <th>Компания</th>
-                    <th>Группа</th>
-                    <th></th>
-                    <th>Присутствие</th>
+                    <th scope="col">Номер</th>
+                    <th scope="col">ФИО</th>
+                    <th scope="col">Компания</th>
+                    <th scope="col">Группа</th>
+                    <th scope="col"></th>
+                    <th scope="col">Присутствие</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td @click="openModal">Зубенко Михаил Петрович</td>
-                    <td>ООО "АСОЛЬ"</td>
-                    <td>Партнёр</td>
+                <tr v-for="{ id, fullname, company, group, presence } in visitors" :key="id">
+                    <td>{{ id }}</td>
+                    <td @click="openModal">{{ fullname }}</td>
+                    <td>{{ company }}</td>
+                    <td>{{ group }}</td>
                     <td></td>
                     <td>
-                        <PresenceIndicator :is-present="true" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td @click="openModal">Зубенко Михаил Петрович</td>
-                    <td>ООО "АСОЛЬ"</td>
-                    <td>Прохожий</td>
-                    <td></td>
-                    <td>
-                        <PresenceIndicator :is-present="false" />
+                        <PresenceIndicator :is-present="presence" />
                     </td>
                 </tr>
             </tbody>
@@ -38,9 +28,12 @@
 </template>
 <script setup lang="ts">
 import { inject } from 'vue';
+import { useLoadVisitors } from '../firebase'
 import PresenceIndicator from '../components/PresenceIndicator.vue'
 
 const openModal = inject('openModal');
+
+const visitors = useLoadVisitors()
 </script>
 <style scoped>
 .table-container {

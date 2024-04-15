@@ -53,14 +53,14 @@ const openModal = () => {
 
 defineExpose({ openModal });
 
-const form = reactive({ fullname: '', company: '', group: '', presence: '' })
+const form = reactive({ fullname: '', company: '', group: '', presence: false })
 
 const onSubmit = async () => {
   await createVisitor({ ...form })
   form.fullname = ''
   form.company = ''
   form.group = ''
-  form.presence = ''
+  form.presence = false
 }
 
 </script>
