@@ -53,7 +53,7 @@ input, button {
 input {
     padding: 15px;
     font-size: 16px;
-    width: 394px;
+    width: 15vw;
 }
 
 input:focus {
@@ -66,7 +66,7 @@ button {
     text-align: center;
     color: white;
     font-size: 24px;
-    width: 273px;
+    width: 15vw;
     cursor: pointer;
 }
 
