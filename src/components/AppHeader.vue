@@ -9,19 +9,12 @@
         <div class="visitors">
         </div>
     </header>
-    <VisitorsDialog ref="dialog" />
 </template>
 <script setup lang="ts">
-import { ref } from 'vue';
+import { inject } from 'vue';
 import Logo from '../assets/Logo.vue';
-import VisitorsDialog, { openModal } from './VisitorsDialog.vue';
 
-const dialog = ref(null);
-
-const openModal = () => {
-  dialog.value.openModal();
-};
-
+const openModal = inject('openModal');
 </script>
 <style scoped>
 .header-container {

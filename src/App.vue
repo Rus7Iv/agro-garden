@@ -3,12 +3,23 @@
     <AppHeader />
     <router-view class="content" />
     <AppFooter />
+    <VisitorsDialog ref="dialog" />
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref, provide } from 'vue';
 import AppHeader from './components/AppHeader.vue';
 import AppFooter from './components/AppFooter.vue';
+import VisitorsDialog from './components/VisitorsDialog.vue';
+
+const dialog = ref(null);
+
+const openModal = () => {
+  dialog.value.openModal();
+};
+
+provide('openModal', openModal);
 </script>
 
 <style scoped>
