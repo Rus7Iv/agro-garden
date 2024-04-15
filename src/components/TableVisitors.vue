@@ -12,24 +12,14 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td @click="openModal">Зубенко Михаил Петрович</td>
-                    <td>ООО "АСОЛЬ"</td>
-                    <td>Партнёр</td>
+                <tr v-for="visitor in visitors" :key="visitor.id">
+                    <td>{{ visitor.id }}</td>
+                    <td @click="openModal">{{ visitor.name }}</td>
+                    <td>{{ visitor.company }}</td>
+                    <td>{{ visitor.group }}</td>
                     <td></td>
                     <td>
-                        <PresenceIndicator :is-present="true" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td @click="openModal">Зубенко Михаил Петрович</td>
-                    <td>ООО "АСОЛЬ"</td>
-                    <td>Прохожий</td>
-                    <td></td>
-                    <td>
-                        <PresenceIndicator :is-present="false" />
+                        <PresenceIndicator :is-present="visitor.isPresent" />
                     </td>
                 </tr>
             </tbody>
@@ -39,9 +29,11 @@
 <script setup lang="ts">
 import { inject } from 'vue';
 import PresenceIndicator from '../components/PresenceIndicator.vue'
+import visitors from '../../database/visitors.json';
 
 const openModal = inject('openModal');
 </script>
+
 <style scoped>
 .table-container {
     display: flex;
