@@ -14,7 +14,7 @@
             <tbody>
                 <tr>
                     <td>1</td>
-                    <td>Зубенко Михаил Петрович</td>
+                    <td @click="openModal">Зубенко Михаил Петрович</td>
                     <td>ООО "АСОЛЬ"</td>
                     <td>Партнёр</td>
                     <td></td>
@@ -24,7 +24,7 @@
                 </tr>
                 <tr>
                     <td>2</td>
-                    <td>Зубенко Михаил Петрович</td>
+                    <td @click="openModal">Зубенко Михаил Петрович</td>
                     <td>ООО "АСОЛЬ"</td>
                     <td>Прохожий</td>
                     <td></td>
@@ -37,7 +37,10 @@
     </div>
 </template>
 <script setup lang="ts">
+import { inject } from 'vue';
 import PresenceIndicator from '../components/PresenceIndicator.vue'
+
+const openModal = inject('openModal');
 </script>
 <style scoped>
 .table-container {
