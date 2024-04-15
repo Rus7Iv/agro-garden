@@ -15,9 +15,17 @@ const firebaseApp = firebase.initializeApp(config)
 
 const db = firebaseApp.firestore()
 const visitorsCollection = db.collection('visitors')
+const counterDoc = db.collection('counters').doc('visitorCounter');
 
-export const createVisitor = (visitor: firebase.firestore.DocumentData) => {
-  return visitorsCollection.add(visitor)
+export const createVisitor = async (visitor: firebase.firestore.DocumentData) => {
+  const counterSnapshot = await counterDoc.get();
+  const counterData = counterSnapshot.data();
+  const currentCount = counterData ? counterData.count : 0;
+
+  await db.runTransaction(async (transaction) => {
+    transaction.set(counterDoc, { count: currentCount + 1 });
+    transaction.set(visitorsCollection.doc(), { ...visitor, order: currentCount + 1 });
+  });
 }
 
 export const geVisitor = async (id: string | undefined) => {
@@ -34,11 +42,12 @@ export const deleteVisitor = (id: string | undefined) => {
 }
 
 export const useLoadVisitors = () => {
-  const visitors = ref<{ id: string; fullname: string; company: string; group: string; presence: boolean; }[]>([])
+  const visitors = ref<{ id: string; order: number; fullname: string; company: string; group: string; presence: boolean; }[]>([])
 
   const close = visitorsCollection.onSnapshot(snapshot => {
     visitors.value = snapshot.docs.map(doc => ({ 
-      id: doc.id, 
+      id: doc.id,
+      order: doc.data().order,
       fullname: doc.data().fullname, 
       company: doc.data().company, 
       group: doc.data().group, 

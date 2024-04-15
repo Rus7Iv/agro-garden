@@ -22,7 +22,7 @@
 
         <div class="form-group mt-3">
           <label>Присутствие</label>
-          <input v-model="form.presence" class="form-control" required type="checkbox" />
+          <input v-model="form.presence" class="form-control" type="checkbox" />
         </div>
 
         <div class="modal-button-group">

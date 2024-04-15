@@ -12,8 +12,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="{ id, fullname, company, group, presence } in visitors" :key="id">
-                    <td>{{ id }}</td>
+                <tr v-for="{ id, order, fullname, company, group, presence } in visitors" :key="id">
+                    <td>{{ order }}</td>
                     <td @click="openModal">{{ fullname }}</td>
                     <td>{{ company }}</td>
                     <td>{{ group }}</td>
