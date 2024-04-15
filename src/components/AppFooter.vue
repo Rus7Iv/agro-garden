@@ -1,6 +1,6 @@
 <template>
     <footer class="footer-container">
-        <span>Фильтровать по:</span>
+        <span class="filtered-span">Фильтровать по:</span>
         <button>Отсутсвующим</button>
         <button>Присутствующим</button>
         <button>Без фильра</button>
@@ -11,6 +11,19 @@
 </script>
 <style scoped>
 .footer-container {
-    
+    display: flex;
+    gap: 40px
+}
+
+.filtered-span {
+    font-size: 30px;
+    font-weight: 700;
+}
+
+button {
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
 }
 </style>
