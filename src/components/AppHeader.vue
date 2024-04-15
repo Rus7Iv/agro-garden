@@ -4,14 +4,23 @@
             <Logo />
             <input placeholder="Поиск по имени" />
             <input placeholder="Поиск по компании" />
-            <button>Добавить</button>
+            <button @click="openModal">Добавить</button>
         </div>
         <div class="visitors">
         </div>
     </header>
+    <VisitorsDialog ref="dialog" />
 </template>
 <script setup lang="ts">
+import { ref } from 'vue';
 import Logo from '../assets/Logo.vue';
+import VisitorsDialog, { openModal } from './VisitorsDialog.vue';
+
+const dialog = ref(null);
+
+const openModal = () => {
+  dialog.value.openModal();
+};
 
 </script>
 <style scoped>
@@ -23,7 +32,7 @@ import Logo from '../assets/Logo.vue';
   height: 130px;
   padding: 0 50px;
   margin: 0;
-  z-index: 1000; 
+  z-index: 9; 
   box-sizing: border-box;
   backdrop-filter: blur(10px);
 
