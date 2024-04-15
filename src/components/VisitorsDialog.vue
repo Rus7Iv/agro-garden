@@ -4,35 +4,41 @@
       <button class="close" @click="closeModal">
         <CloseButton />
       </button>
-      <div class="modal-form">
-        <div class="modal-form--row">
-          <span>ФИО</span>
-          <input />
+      <form @submit.prevent="onSubmit">
+        <div class="form-group">
+          <label>ФИО</label>
+          <input v-model="form.fullname" class="form-control" required />
         </div>
-        <div class="modal-form--row">
-          <span>Компания</span>
-          <input />
+
+        <div class="form-group mt-3">
+          <label>Компания</label>
+          <input v-model="form.company" class="form-control" required />
         </div>
-        <div class="modal-form--row">
-          <span>Группа</span>
-          <input />
+
+        <div class="form-group mt-3">
+          <label>Группа</label>
+          <input v-model="form.group" class="form-control" required />
         </div>
-        <div class="modal-form--row">
-          <span>Присутствие</span>
-          <input type="checkbox" />
+
+        <div class="form-group mt-3">
+          <label>Присутствие</label>
+          <input v-model="form.presence" class="form-control" required type="checkbox" />
         </div>
-        
+
         <div class="modal-button-group">
-          <button>Добавить</button>
+          <button type="submit" class="btn btn-success mt-3">
+            Добавить
+          </button>
           <button>Закрыть</button>
         </div>
-      </div>
+      </form>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, defineExpose } from 'vue';
+import { createVisitor } from '../firebase'
+import { ref, defineExpose, reactive } from 'vue';
 import CloseButton from '../assets/CloseButton.vue'
 
 const isOpen = ref(false);
@@ -46,6 +52,16 @@ const openModal = () => {
 };
 
 defineExpose({ openModal });
+
+const form = reactive({ fullname: '', company: '', group: '', presence: '' })
+
+const onSubmit = async () => {
+  await createVisitor({ ...form })
+  form.fullname = ''
+  form.company = ''
+  form.group = ''
+  form.presence = ''
+}
 
 </script>
 
