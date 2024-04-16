@@ -28,7 +28,7 @@ export const createVisitor = async (visitor: firebase.firestore.DocumentData) =>
   });
 }
 
-export const geVisitor = async (id: string | undefined) => {
+export const getVisitor = async (id: string | undefined) => {
   const visitor = await visitorsCollection.doc(id).get()
   return visitor.exists ? visitor.data() : null
 }

@@ -12,9 +12,9 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="{ id, order, fullname, company, group, presence } in visitors" :key="id">
+                <tr v-for="{ id, order, fullname, company, group, presence } in visitors" :key="id" @click="() => openModal && openModal(id)">
                     <td>{{ order }}</td>
-                    <td @click="openModal">{{ fullname }}</td>
+                    <td>{{ fullname }}</td>
                     <td>{{ company }}</td>
                     <td>{{ group }}</td>
                     <td></td>
@@ -31,10 +31,11 @@ import { inject } from 'vue';
 import { useLoadVisitors } from '../firebase'
 import PresenceIndicator from '../components/PresenceIndicator.vue'
 
-const openModal = inject('openModal');
+const openModal = inject<((id: string) => void) | undefined>('openModalForEdit');
 
 const visitors = useLoadVisitors()
 </script>
+
 <style scoped>
 .table-container {
     display: flex;

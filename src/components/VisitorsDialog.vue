@@ -27,7 +27,7 @@
 
         <div class="modal-button-group">
           <button type="submit" class="btn btn-success mt-3">
-            Добавить
+            {{ isEditMode ? 'Редактировать' : 'Добавить' }}
           </button>
           <button>Закрыть</button>
         </div>
@@ -37,30 +37,50 @@
 </template>
 
 <script setup lang="ts">
-import { createVisitor } from '../firebase'
+import { createVisitor, getVisitor, updateVisitor } from '../firebase'
 import { ref, defineExpose, reactive } from 'vue';
 import CloseButton from '../assets/CloseButton.vue'
 
 const isOpen = ref(false);
+const isEditMode = ref(false);
+const form = reactive({ id: '', fullname: '', company: '', group: '', presence: false })
 
 const closeModal = () => {
   isOpen.value = false;
+  isEditMode.value = false;
 };
 
 const openModal = () => {
   isOpen.value = true;
 };
 
-defineExpose({ openModal });
+const openModalForEdit = async (id: string) => {
+  const visitor = await getVisitor(id);
+  if (visitor) {
+    form.id = id;
+    form.fullname = visitor.fullname;
+    form.company = visitor.company;
+    form.group = visitor.group;
+    form.presence = visitor.presence;
+    isEditMode.value = true;
+    openModal();
+  }
+};
 
-const form = reactive({ fullname: '', company: '', group: '', presence: false })
+defineExpose({ openModal, openModalForEdit });
 
 const onSubmit = async () => {
-  await createVisitor({ ...form })
-  form.fullname = ''
-  form.company = ''
-  form.group = ''
-  form.presence = false
+  if (isEditMode.value) {
+    await updateVisitor(form.id, { ...form });
+    isEditMode.value = false;
+  } else {
+    await createVisitor({ ...form });
+  }
+  form.id = '';
+  form.fullname = '';
+  form.company = '';
+  form.group = '';
+  form.presence = false;
 }
 
 </script>
