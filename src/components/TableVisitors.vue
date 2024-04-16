@@ -3,23 +3,23 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Номер</th>
-                    <th>ФИО</th>
-                    <th>Компания</th>
-                    <th>Группа</th>
-                    <th></th>
-                    <th>Присутствие</th>
+                    <th scope="col">Номер</th>
+                    <th scope="col">ФИО</th>
+                    <th scope="col">Компания</th>
+                    <th scope="col">Группа</th>
+                    <th scope="col"></th>
+                    <th scope="col">Присутствие</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="visitor in visitors" :key="visitor.id">
-                    <td>{{ visitor.id }}</td>
-                    <td @click="openModal">{{ visitor.name }}</td>
-                    <td>{{ visitor.company }}</td>
-                    <td>{{ visitor.group }}</td>
+                <tr v-for="{ id, order, fullname, company, group, presence } in visitors" :key="id" @click="() => openModal && openModal(id)">
+                    <td>{{ order }}</td>
+                    <td>{{ fullname }}</td>
+                    <td>{{ company }}</td>
+                    <td>{{ group }}</td>
                     <td></td>
                     <td>
-                        <PresenceIndicator :is-present="visitor.isPresent" />
+                        <PresenceIndicator :is-present="presence" />
                     </td>
                 </tr>
             </tbody>
@@ -28,10 +28,12 @@
 </template>
 <script setup lang="ts">
 import { inject } from 'vue';
+import { useLoadVisitors } from '../firebase'
 import PresenceIndicator from '../components/PresenceIndicator.vue'
-import visitors from '../../database/visitors.json';
 
-const openModal = inject('openModal');
+const openModal = inject<((id: string) => void) | undefined>('openModalForEdit');
+
+const visitors = useLoadVisitors()
 </script>
 
 <style scoped>

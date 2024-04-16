@@ -14,7 +14,7 @@
 import { inject } from 'vue';
 import Logo from '../assets/Logo.vue';
 
-const openModal = inject('openModal');
+const openModal = inject<(() => void) | undefined>('openModal');
 </script>
 <style scoped>
 .header-container {

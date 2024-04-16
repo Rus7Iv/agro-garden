@@ -4,48 +4,84 @@
       <button class="close" @click="closeModal">
         <CloseButton />
       </button>
-      <div class="modal-form">
-        <div class="modal-form--row">
-          <span>ФИО</span>
-          <input />
+      <form @submit.prevent="onSubmit">
+        <div class="form-group">
+          <label>ФИО</label>
+          <input v-model="form.fullname" class="form-control" required />
         </div>
-        <div class="modal-form--row">
-          <span>Компания</span>
-          <input />
+
+        <div class="form-group mt-3">
+          <label>Компания</label>
+          <input v-model="form.company" class="form-control" required />
         </div>
-        <div class="modal-form--row">
-          <span>Группа</span>
-          <input />
+
+        <div class="form-group mt-3">
+          <label>Группа</label>
+          <input v-model="form.group" class="form-control" required />
         </div>
-        <div class="modal-form--row">
-          <span>Присутствие</span>
-          <input type="checkbox" />
+
+        <div class="form-group mt-3">
+          <label>Присутствие</label>
+          <input v-model="form.presence" class="form-control" type="checkbox" />
         </div>
-        
+
         <div class="modal-button-group">
-          <button>Добавить</button>
+          <button type="submit" class="btn btn-success mt-3">
+            {{ isEditMode ? 'Редактировать' : 'Добавить' }}
+          </button>
           <button>Закрыть</button>
         </div>
-      </div>
+      </form>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, defineExpose } from 'vue';
+import { createVisitor, getVisitor, updateVisitor } from '../firebase'
+import { ref, defineExpose, reactive } from 'vue';
 import CloseButton from '../assets/CloseButton.vue'
 
 const isOpen = ref(false);
+const isEditMode = ref(false);
+const form = reactive({ id: '', fullname: '', company: '', group: '', presence: false })
 
 const closeModal = () => {
   isOpen.value = false;
+  isEditMode.value = false;
 };
 
 const openModal = () => {
   isOpen.value = true;
 };
 
-defineExpose({ openModal });
+const openModalForEdit = async (id: string) => {
+  const visitor = await getVisitor(id);
+  if (visitor) {
+    form.id = id;
+    form.fullname = visitor.fullname;
+    form.company = visitor.company;
+    form.group = visitor.group;
+    form.presence = visitor.presence;
+    isEditMode.value = true;
+    openModal();
+  }
+};
+
+defineExpose({ openModal, openModalForEdit });
+
+const onSubmit = async () => {
+  if (isEditMode.value) {
+    await updateVisitor(form.id, { ...form });
+    isEditMode.value = false;
+  } else {
+    await createVisitor({ ...form });
+  }
+  form.id = '';
+  form.fullname = '';
+  form.company = '';
+  form.group = '';
+  form.presence = false;
+}
 
 </script>
 
